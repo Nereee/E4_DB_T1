@@ -511,6 +511,43 @@ VALUES
     ('BZAU1','Merina Gris,gehiegi kexatzen gara?','01:09:00','podcast','BenetanZabiz1.jpg'),
     
     ('BZAU2','Neomak,sorginkerietan','01:16:00','podcast','BenetanZabiz2.jpg');
+    
+    
+    INSERT INTO Podcast (IdAudio, Kolaboratzaileak, IdPodcaster, Deskribapena) values 
+('WPAU1','Mia Skylar','TWPJ1','Mia Skylar neska transexualak Jordi Wild bisitatu du podcast baterako. Bertan, azken urteetako gai eztabaidagarri eta komentatuenetako batez hitz egingo da. 
+Nolakoa da trans bizitzaren errealitatea? Nola funtzionatzen du zehazki berresleipen-kirurgiak? Trans Legeak aukera ematen die haurrei hormonatzeko edo bulo bat da? 
+Gai horiek eta askoz gehiago, konpondu eta eztabaidatuko dira, galdu ezin duzun podcast interesgarri batean.'),
+
+('WPAU2',null,'TWPJ1','Bi zientzialari aurrez aurre eta eztabaidagai handi bat: Klima Aldaketa. Benetan existitzen da? 
+Horrela bada, gizakien errua al da? Gehiegikeriaz ari al gara berehalako hondamendiarekin? Ingurumenaz haraindiko interesik ba al dago? Zer eragin du 2030 Agendak? 
+Iritsi al gara itzulerarik gabeko puntu batera? Energia berriztagarriak gure salbazioa dira? Galdera horiek guztiak eta beste asko, galdu behar ez duzuen goi-mailako eztabaida batean erantzungo dira.'),
+
+('QMAU1',null,'QSMA1','Mariok suhiltzaileekin dituen ametsei buruz hitz egiten du, 
+"KAIXO" misterioa argitzen da, eta Dane Neymarrekin pikatu eta birziklapenaren errege izendatzen da. 
+Atal osoa https://go.podimo.com/es/qsmaBi ezezagun zuzeneko lagunak egiten astez aste. Mario eta Dane dibortzio festa batean elkartu ziren eta igandero elkartuko dira adiskidetasunaren esanahia ezagutzeko. Edo ez.'),
+
+('QMAU2',NULL,'QSMA1', 'Los chicos hablan sobre el nacimiento de la hija de Dane, experiencias traumáticas en saunas y Dane se pica con Mario Casas.
+Episodio completo en https://go.podimo.com/es/qsmaDos desconocidos se hacen amigos en directo semana tras semana. 
+Mario y Dane coincidieron en una fiesta de divorcio y se juntarán cada domingo para descubrir el significado de la amistad. O no.'),
+
+('TRAU1','Ernesto Sevilla','TRVL1','NIRE CAAAASA! Garai guztietako estralurtar ospetsuena gure programan lurreratzen da bere ontziarekin, eta zinemaren historiako film ikonikoenetako bat gogoratzen laguntzen digu, 
+E.T. EL EXTRATERRESTRE. Denok hunkitu gintuen istorio horrek, eta haren unerik mitikoenak, pertsonaiak, gauzarik bitxienak eta erokeria asko gogoratuz gozatu genuen, ERNESTO SEVILLA zuzendari, 
+aktore eta umoristak ederki lagunduta. Ez itxaron gehiago aireratzen garelako. Hementxe egongo gara!'),
+
+('TRAU2','Rubentonces','TRVL1','Konoha-ra goaz! NARUTOren unibertso liluragarria zain dugu garai guztietako animerik handienetako bati eskainitako atal sinestezin honetan. 
+Nork ez du nahi izan ninja bat izatea edo Hokage bihurtzea? Une, pertsonaia eta era guztietako erokeriak errepasatuko ditugu bidelagun bikain batekin, RUBENTONCES umorista eta eduki-sortzaile bikainarekin. 
+Ez beldurtu, programa hau gustatuko zaizu eta. Bai horixe!'),
+
+('BZAU1',null,'BNZB1','Benetan Zabizen  atal honetan…Neomak taldea! Amets Ormaetxea eta Alaitz Eskudero gonbidatu dituzte Aitziber eta Malenek eta gipuzkoarrez osatutako taldearen inguruan aritu dira.
+Nola ezagutu zuten elkar? Nolakoa da Kepa Junkerarekin lan egitea? Euskal "Tanxugueiras"-ak dira? Haien burua sorgintzat dute? Garrantzitsua al da haientzat taldearen eta emanaldien estetika? Zer dago bizitzaren ostean? Zaila al da musikaren profesioa eta aparteko lana uztartzea? Proiektu berririk dute?
+Esklusiba harrigarri bat kontatu digute eta taldearen merchandising-arekin lotura zuzena du. Japonian biran egon zireneko anekdota eta pasadizo ugari kontatudizkigute gainera!
+Benetan zabiz galduko duzula? Entzun eta ai oi ai!'),
+
+('BZAU2','Merina Gris','BNZB1', 'Merina Gris musika taldeko Julen eta Sara izan dira Benetan Zabizen! Aitziber eta Malen haien fan sutsuak dira, taldearen orijinaltasunak arreta pizten die. Zergatik ote dira anonimoak? Zein da aurpegia ez erakustearen arrazoia? Funtzionatzen ote die? Nola lortzen dute magia mantentzea?
+Horrez gain, tarotari eta adikzioei buruz jardun dira. Zeren menpeko dira? Horoskopoarekin obsesionatuta daude? Mezuak azkar erantzutekoak dira? Sentiberak kontsideratzen al dira? Zer dago lilili abestiaren atzean? Atal honetako bonba, ordea, amaieran lehertu da: anonimotasunarekin amaitzea erabaki dute eta maskarak kendu dituzte.
+Benetan Zabiz galduko duzula?
+Podcast hau On:time-k ekoitzen du EITB Podkasterako.');
+
 
 -- Insertatu album tablan
 INSERT INTO Album (IdAlbum, Izenburua, urtea, generoa, Idmusikaria, kolaboratzaileak)
@@ -554,40 +591,7 @@ VALUES
 	('BUAU3', 'BLAL2'),
 	('BUAU4', 'BLAL2');
     
-INSERT INTO Podcast (IdAudio, Kolaboratzaileak, IdPodcaster, Deskribapena) values 
-('WPAU1','Mia Skylar','TWPJ1','Mia Skylar neska transexualak Jordi Wild bisitatu du podcast baterako. Bertan, azken urteetako gai eztabaidagarri eta komentatuenetako batez hitz egingo da. 
-Nolakoa da trans bizitzaren errealitatea? Nola funtzionatzen du zehazki berresleipen-kirurgiak? Trans Legeak aukera ematen die haurrei hormonatzeko edo bulo bat da? 
-Gai horiek eta askoz gehiago, konpondu eta eztabaidatuko dira, galdu ezin duzun podcast interesgarri batean.'),
 
-('WPAU2',null,'TWPJ1','Bi zientzialari aurrez aurre eta eztabaidagai handi bat: Klima Aldaketa. Benetan existitzen da? 
-Horrela bada, gizakien errua al da? Gehiegikeriaz ari al gara berehalako hondamendiarekin? Ingurumenaz haraindiko interesik ba al dago? Zer eragin du 2030 Agendak? 
-Iritsi al gara itzulerarik gabeko puntu batera? Energia berriztagarriak gure salbazioa dira? Galdera horiek guztiak eta beste asko, galdu behar ez duzuen goi-mailako eztabaida batean erantzungo dira.'),
-
-('QMAU1',null,'QSMA1','Mariok suhiltzaileekin dituen ametsei buruz hitz egiten du, 
-"KAIXO" misterioa argitzen da, eta Dane Neymarrekin pikatu eta birziklapenaren errege izendatzen da. 
-Atal osoa https://go.podimo.com/es/qsmaBi ezezagun zuzeneko lagunak egiten astez aste. Mario eta Dane dibortzio festa batean elkartu ziren eta igandero elkartuko dira adiskidetasunaren esanahia ezagutzeko. Edo ez.'),
-
-('QMAU2',NULL,'QSMA1', 'Los chicos hablan sobre el nacimiento de la hija de Dane, experiencias traumáticas en saunas y Dane se pica con Mario Casas.
-Episodio completo en https://go.podimo.com/es/qsmaDos desconocidos se hacen amigos en directo semana tras semana. 
-Mario y Dane coincidieron en una fiesta de divorcio y se juntarán cada domingo para descubrir el significado de la amistad. O no.'),
-
-('TRAU1','Ernesto Sevilla','TRVL1','NIRE CAAAASA! Garai guztietako estralurtar ospetsuena gure programan lurreratzen da bere ontziarekin, eta zinemaren historiako film ikonikoenetako bat gogoratzen laguntzen digu, 
-E.T. EL EXTRATERRESTRE. Denok hunkitu gintuen istorio horrek, eta haren unerik mitikoenak, pertsonaiak, gauzarik bitxienak eta erokeria asko gogoratuz gozatu genuen, ERNESTO SEVILLA zuzendari, 
-aktore eta umoristak ederki lagunduta. Ez itxaron gehiago aireratzen garelako. Hementxe egongo gara!'),
-
-('TRAU2','Rubentonces','TRVL1','Konoha-ra goaz! NARUTOren unibertso liluragarria zain dugu garai guztietako animerik handienetako bati eskainitako atal sinestezin honetan. 
-Nork ez du nahi izan ninja bat izatea edo Hokage bihurtzea? Une, pertsonaia eta era guztietako erokeriak errepasatuko ditugu bidelagun bikain batekin, RUBENTONCES umorista eta eduki-sortzaile bikainarekin. 
-Ez beldurtu, programa hau gustatuko zaizu eta. Bai horixe!'),
-
-('BZAU1',null,'BNZB1','Benetan Zabizen  atal honetan…Neomak taldea! Amets Ormaetxea eta Alaitz Eskudero gonbidatu dituzte Aitziber eta Malenek eta gipuzkoarrez osatutako taldearen inguruan aritu dira.
-Nola ezagutu zuten elkar? Nolakoa da Kepa Junkerarekin lan egitea? Euskal "Tanxugueiras"-ak dira? Haien burua sorgintzat dute? Garrantzitsua al da haientzat taldearen eta emanaldien estetika? Zer dago bizitzaren ostean? Zaila al da musikaren profesioa eta aparteko lana uztartzea? Proiektu berririk dute?
-Esklusiba harrigarri bat kontatu digute eta taldearen merchandising-arekin lotura zuzena du. Japonian biran egon zireneko anekdota eta pasadizo ugari kontatudizkigute gainera!
-Benetan zabiz galduko duzula? Entzun eta ai oi ai!'),
-
-('BZAU2','Merina Gris','BNZB1', 'Merina Gris musika taldeko Julen eta Sara izan dira Benetan Zabizen! Aitziber eta Malen haien fan sutsuak dira, taldearen orijinaltasunak arreta pizten die. Zergatik ote dira anonimoak? Zein da aurpegia ez erakustearen arrazoia? Funtzionatzen ote die? Nola lortzen dute magia mantentzea?
-Horrez gain, tarotari eta adikzioei buruz jardun dira. Zeren menpeko dira? Horoskopoarekin obsesionatuta daude? Mezuak azkar erantzutekoak dira? Sentiberak kontsideratzen al dira? Zer dago lilili abestiaren atzean? Atal honetako bonba, ordea, amaieran lehertu da: anonimotasunarekin amaitzea erabaki dute eta maskarak kendu dituzte.
-Benetan Zabiz galduko duzula?
-Podcast hau On:time-k ekoitzen du EITB Podkasterako.');
 
 INSERT INTO Hizkuntza (IdHizkuntza, Deskribapena)
 VALUES 
