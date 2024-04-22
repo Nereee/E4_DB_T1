@@ -76,7 +76,7 @@ IdList varchar(7) primary key,
 Izenburua varchar(15) not null,
 Sorreradata date not null,
 IdBezeroa varchar(7) not null,
- foreign key (IdBezeroa) references Bezeroa (IdBezeroa)
+ foreign key (IdBezeroa) references Bezeroa (IdBezeroa)on delete cascade on update cascade
 );
 
 create table playlist_abestiak (
@@ -84,22 +84,22 @@ IdAudio varchar(7),
 IdList varchar(7),
 data date,
 primary key (IdAudio,IdList, data),
-foreign key (IdAudio) references Abestia(IdAudio),
+foreign key (IdAudio) references Abestia(IdAudio) on delete cascade on update cascade,
 foreign key (IdList) references Playlist(IdList) on delete cascade on update cascade
 );
 
 create table premium (
 IdBezeroa varchar(7) primary key,
 Iraungitzedata date not null,
-foreign key (IdBezeroa) references Bezeroa(IdBezeroa)
+foreign key (IdBezeroa) references Bezeroa(IdBezeroa) on delete cascade on update cascade
 );
 
 create table gustukoak (
 IdBezeroa varchar(7),
 IdAudio varchar(7),
 primary key (IdBezeroa,IdAudio),
-foreign key (IdBezeroa) references Bezeroa(IdBezeroa),
-foreign key (IdAudio) references Audio(IdAudio)
+foreign key (IdBezeroa) references Bezeroa(IdBezeroa) on delete cascade on update cascade,
+foreign key (IdAudio) references Audio(IdAudio) on delete cascade on update cascade
 );
 
 create table Erreprodukzioak (
@@ -107,8 +107,8 @@ IdBezeroa varchar(7),
 IdAudio varchar(7),
 data date,
 primary key (IdBezeroa,IdAudio, data),
-foreign key (IdBezeroa) references Bezeroa(IdBezeroa),
-foreign key (IdAudio) references Audio(IdAudio)
+foreign key (IdBezeroa) references Bezeroa(IdBezeroa) on delete cascade on update cascade,
+foreign key (IdAudio) references Audio(IdAudio) on delete cascade on update cascade
 );
 
 create table Estatistikak (
