@@ -641,11 +641,13 @@ VALUES
 
 INSERT INTO Erreprodukzioak (IdBezeroa, IdAudio, data)
 VALUES 
-    ('BZ001', 'ESAU1', '2023-02-10'),
-    ('BZ002', 'EMAU1', '2023-02-12'),
-    ('BZ003', 'TSAU3', '2023-02-15'),
-    ('BZ004', 'XIAU4', '2023-02-20'),
-    ('BZ001', 'BUAU1', '2023-02-25');
+	('BZ001', 'BUAU1', '2024-04-24'),
+	('BZ002', 'TSAU2', '2023-08-23'),
+    ('BZ001', 'ESAU1', '2024-01-10'),
+    ('BZ002', 'EMAU1', '2024-02-12'),
+    ('BZ003', 'TSAU3', '2024-04-15'),
+    ('BZ004', 'XIAU4', '2024-02-20'),
+    ('BZ001', 'BUAU1', '2024-05-10');
 
 INSERT INTO Estatistikak (IdAudio, GustukoAbestiak, GustokoPodcaster, Entzundakoa, playlist)
 VALUES 
