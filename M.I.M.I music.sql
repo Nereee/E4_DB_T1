@@ -8,7 +8,7 @@ create table Musikaria (
 Idmusikaria varchar(7) primary key,
 IzenArtistikoa varchar(50) unique not null,
 Irudia longblob not null,
-Ezaugarria ENUM("barkalia","taldea") not null,
+Ezaugarria ENUM("bakarlaria","taldea") not null,
 Deskribapena longtext not null 
 );
 
@@ -18,7 +18,6 @@ IzenArtistikoa varchar(50) unique not null,
 Irudia longblob not null,
 Deskribapena longtext not null 
 );
-
 create table Audio (
 IdAudio varchar(7) primary key,
 Izena varchar(40) not null,
@@ -105,7 +104,7 @@ foreign key (IdAudio) references Audio(IdAudio) ON DELETE CASCADE ON UPDATE CASC
 create table Erreprodukzioak (
 IdBezeroa varchar(7),
 IdAudio varchar(7),
-data date,
+data DATETIME,
 primary key (IdBezeroa,IdAudio, data),
 foreign key (IdBezeroa) references Bezeroa(IdBezeroa)ON DELETE CASCADE ON UPDATE CASCADE,
 foreign key (IdAudio) references Audio(IdAudio) ON DELETE CASCADE ON UPDATE CASCADE

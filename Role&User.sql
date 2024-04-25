@@ -20,7 +20,7 @@ create role Bezeroa;
 -- Admin baimenak (Guztia) --
 grant all privileges on MIMI.* to DB_Administratzailea;
 
--- Dep-Buruaren baimenak -- ???????
+-- Dep-Buruaren baimenak -- (Datuak eraldatu)
 grant select, insert, update, delete on MIMI.* to Departamentu_burua;
 
 -- Analisten baimenak --
