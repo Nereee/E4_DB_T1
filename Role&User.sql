@@ -1,4 +1,4 @@
-use mimi;
+use MIMI;
 
 -- Rolak --
 drop role if exists DB_Administratzailea;
@@ -20,7 +20,7 @@ create role Bezeroa;
 -- Admin baimenak (Guztia) --
 grant all privileges on MIMI.* to DB_Administratzailea;
 
--- Dep-Buruaren baimenak -- (Datuak eraldatu)
+-- Dep-Buruaren baimenak -- ???????
 grant select, insert, update, delete on MIMI.* to Departamentu_burua;
 
 -- Analisten baimenak --
@@ -86,3 +86,5 @@ show grants for Finantza;
 show grants for TecEstrategia;
 show grants for Legea;
 show grants for IT;
+
+select MIMI.abestia

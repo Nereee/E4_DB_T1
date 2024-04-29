@@ -8,7 +8,7 @@ create table Musikaria (
 Idmusikaria varchar(7) primary key,
 IzenArtistikoa varchar(50) unique not null,
 Irudia longblob not null,
-Ezaugarria ENUM("bakarlaria","taldea") not null,
+Ezaugarria ENUM("barkalia","taldea") not null,
 Deskribapena longtext not null 
 );
 
@@ -18,6 +18,7 @@ IzenArtistikoa varchar(50) unique not null,
 Irudia longblob not null,
 Deskribapena longtext not null 
 );
+
 create table Audio (
 IdAudio varchar(7) primary key,
 Izena varchar(40) not null,
@@ -67,7 +68,7 @@ pasahitza varchar(10) not null,
 jaiotzedata date not null,
 Erregistrodata date not null,
 mota enum("premium","free"),
-constraint v_idBezero foreign key (Hizkuntza) references Hizkuntza(IdHizkuntza) ON DELETE CASCADE ON UPDATE CASCADE
+constraint v_idBezero foreign key (Hizkuntza) references Hizkuntza(IdHizkuntza) on delete cascade on update cascade
 );
 
 create table Playlist (
@@ -75,7 +76,7 @@ IdList varchar(7) primary key,
 Izenburua varchar(15) not null,
 Sorreradata date not null,
 IdBezeroa varchar(7) not null,
- foreign key (IdBezeroa) references Bezeroa (IdBezeroa) ON DELETE CASCADE ON UPDATE CASCADE
+ foreign key (IdBezeroa) references Bezeroa (IdBezeroa)on delete cascade on update cascade
 );
 
 create table playlist_abestiak (
@@ -83,31 +84,31 @@ IdAudio varchar(7),
 IdList varchar(7),
 data date,
 primary key (IdAudio,IdList, data),
-foreign key (IdAudio) references Abestia(IdAudio) ON DELETE CASCADE ON UPDATE CASCADE,
+foreign key (IdAudio) references Abestia(IdAudio) on delete cascade on update cascade,
 foreign key (IdList) references Playlist(IdList) on delete cascade on update cascade
 );
 
 create table premium (
 IdBezeroa varchar(7) primary key,
 Iraungitzedata date not null,
-foreign key (IdBezeroa) references Bezeroa(IdBezeroa) ON DELETE CASCADE ON UPDATE CASCADE
+foreign key (IdBezeroa) references Bezeroa(IdBezeroa) on delete cascade on update cascade
 );
 
 create table gustukoak (
 IdBezeroa varchar(7),
 IdAudio varchar(7),
 primary key (IdBezeroa,IdAudio),
-foreign key (IdBezeroa) references Bezeroa(IdBezeroa) ON DELETE CASCADE ON UPDATE CASCADE,
-foreign key (IdAudio) references Audio(IdAudio) ON DELETE CASCADE ON UPDATE CASCADE
+foreign key (IdBezeroa) references Bezeroa(IdBezeroa) on delete cascade on update cascade,
+foreign key (IdAudio) references Audio(IdAudio) on delete cascade on update cascade
 );
 
 create table Erreprodukzioak (
 IdBezeroa varchar(7),
 IdAudio varchar(7),
-data DATETIME,
+data date,
 primary key (IdBezeroa,IdAudio, data),
-foreign key (IdBezeroa) references Bezeroa(IdBezeroa)ON DELETE CASCADE ON UPDATE CASCADE,
-foreign key (IdAudio) references Audio(IdAudio) ON DELETE CASCADE ON UPDATE CASCADE
+foreign key (IdBezeroa) references Bezeroa(IdBezeroa) on delete cascade on update cascade,
+foreign key (IdAudio) references Audio(IdAudio) on delete cascade on update cascade
 );
 
 create table Estatistikak (
@@ -116,5 +117,5 @@ GustukoAbestiak int not null,
 GustokoPodcaster int not null,
 Entzundakoa int not null,
 playlist int not null,
-foreign key (IdAudio) references Audio(IdAudio) ON DELETE CASCADE ON UPDATE CASCADE
+foreign key (IdAudio) references Audio(IdAudio)
 );
