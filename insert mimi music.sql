@@ -116,18 +116,18 @@ Podcast hau On:time-k ekoitzen du EITB Podkasterako.');
 
 
 -- Insertatu album tablan
-INSERT INTO Album (IdAlbum, Izenburua, urtea, generoa, Idmusikaria, kolaboratzaileak)
+INSERT INTO Album (IdAlbum, Izenburua, urtea, generoa, Idmusikaria, kolaboratzaileak, Iraupena)
 VALUES 
-    ('ESAL1', 'Estopía', '2022-01-01', 'Pop/Rock', 'EST01','Pole eta Fito Fitipaldi'),
-	('ESAL2', 'Destrangis', '2022-01-01', 'Pop/Rock', 'EST01',null),
-    ('EMAL1', 'Encore', '2023-01-01', 'Hip Hop', 'EMI01', null),
-    ('EMAL2', 'Recovery', '2023-01-01', 'Hip Hop', 'EMI01',null),
-    ('TSAL1', 'Reputation', '2023-01-01', 'Pop', 'TAS01', null),
-	('TSAL2', 'Speak Now', '2023-01-01', 'Pop', 'TAS01', null),
-    ('XIAL1', 'Oi! Baldorba', '2021-01-01', 'Rock', 'XII01',null),
-	('XIAl2', 'Aurrera', '2021-01-01', 'Rock', 'XII01',null),
-    ('BLAL1', 'Aldatu Aurretik', '2022-01-01', 'Rock', 'BUL01',null),
-	('BLAL2', 'Erdian Oraina', '2022-01-01', 'Rock', 'BUL01',null);
+    ('ESAL1', 'Estopía', '2022-01-01', 'Pop/Rock', 'EST01','Pole eta Fito Fitipaldi', '00:00:00'),
+	('ESAL2', 'Destrangis', '2022-01-01', 'Pop/Rock', 'EST01',null, '00:00:00'),
+    ('EMAL1', 'Encore', '2023-01-01', 'Hip Hop', 'EMI01', null, '00:00:00'),
+    ('EMAL2', 'Recovery', '2023-01-01', 'Hip Hop', 'EMI01',null, '00:00:00'),
+    ('TSAL1', 'Reputation', '2023-01-01', 'Pop', 'TAS01', null, '00:00:00'),
+	('TSAL2', 'Speak Now', '2023-01-01', 'Pop', 'TAS01', null, '00:00:00'),
+    ('XIAL1', 'Oi! Baldorba', '2021-01-01', 'Rock', 'XII01',null, '00:00:00'),
+	('XIAl2', 'Aurrera', '2021-01-01', 'Rock', 'XII01',null, '00:00:00'),
+    ('BLAL1', 'Aldatu Aurretik', '2022-01-01', 'Rock', 'BUL01',null,'00:00:00'),
+	('BLAL2', 'Erdian Oraina', '2022-01-01', 'Rock', 'BUL01',null,'00:00:00');
 
 -- Insertatu datuakabestia tablan
 INSERT INTO Abestia (IdAudio, IdAlbum)
@@ -152,8 +152,8 @@ VALUES
 	('XIAU3', 'XIAl2'),
 	('XIAU4', 'XIAl2'),
     
-    ('BUAU1', 'BLAL2'),
-    ('BUAU2', 'BLAL2'),
+    ('BUAU1', 'BLAL1'),
+    ('BUAU2', 'BLAL1'),
 	('BUAU3', 'BLAL2'),
 	('BUAU4', 'BLAL2');
     
@@ -172,7 +172,7 @@ VALUES
 
 INSERT INTO Bezeroa (IdBezeroa, Izena, Abizena, Hizkuntza, erabiltzailea, pasahitza, jaiotzedata, Erregistrodata, mota)
 VALUES 
-    ('BZ001', 'Jon', 'Etxeberria', 'EU', 'jon12', 'jon123', '1990-05-15', '2023-02-10', 'premium'),
+    ('BZ001', 'a', 'a', 'EU', 'a', 'a', '1990-05-15', '2023-02-10', 'premium'),
     ('BZ002', 'Ane', 'Lopez', 'ES', 'anelop', 'ane123', '1995-10-20', '2023-02-12', 'free'),
     ('BZ003', 'Mark', 'Smith', 'EN', 'mark123', 'mark456', '1988-07-30', '2023-02-15', 'premium'),
     ('BZ004', 'María', 'García', 'ES', 'maria12', 'maria456', '1998-03-25', '2023-02-20', 'free');

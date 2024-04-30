@@ -43,6 +43,7 @@ urtea date not null,
 generoa varchar(20) not null,
 Idmusikaria varchar(7) not null,
 Kolaboratzaileak varchar(100),
+Iraupena time not null,
 foreign key (Idmusikaria) references Musikaria (Idmusikaria) on update cascade on delete cascade
 );
 
