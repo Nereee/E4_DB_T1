@@ -8,7 +8,7 @@ create table Musikaria (
 Idmusikaria varchar(7) primary key,
 IzenArtistikoa varchar(50) unique not null,
 Irudia longblob not null,
-Ezaugarria ENUM("barkalia","taldea") not null,
+Ezaugarria ENUM("bakarlaria","taldea") not null,
 Deskribapena longtext not null 
 );
 
