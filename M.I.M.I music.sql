@@ -43,6 +43,7 @@ urtea date not null,
 generoa varchar(20) not null,
 Idmusikaria varchar(7) not null,
 Kolaboratzaileak varchar(100),
+Iraupena time not null,
 foreign key (Idmusikaria) references Musikaria (Idmusikaria) on update cascade on delete cascade
 );
 
@@ -68,7 +69,7 @@ pasahitza varchar(10) not null,
 jaiotzedata date not null,
 Erregistrodata date not null,
 mota enum("premium","free"),
-constraint v_idBezero foreign key (Hizkuntza) references Hizkuntza(IdHizkuntza)
+constraint v_idBezero foreign key (Hizkuntza) references Hizkuntza(IdHizkuntza) on delete cascade on update cascade
 );
 
 create table Playlist (
