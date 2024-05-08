@@ -1,6 +1,6 @@
 use MIMI;
 
--- Rolak --
+-- Beharrezko Rolak Sortu --
 drop role if exists DB_Administratzailea;
 drop role if exists Departamentu_burua;
 drop role if exists Analista1;
@@ -11,21 +11,21 @@ drop role if exists Bezeroa;
 create role DB_Administratzailea;
 create role Departamentu_burua;
 create role Analista1;
-create role Analista2;
+-- create role Analista2;
 create role Langileak;
 create role Bezeroa;
 
 -- ------------------------------ Baimenak esleitu ------------------------------ --
-
+-- Roleei beharrzeko baimenak esleitu, 
 -- Admin baimenak (Guztia) --
 grant all privileges on MIMI.* to DB_Administratzailea;
 
--- Dep-Buruaren baimenak -- ???????
+-- Dep-Buruaren baimenak --
 grant select, insert, update, delete on MIMI.* to Departamentu_burua;
 
 -- Analisten baimenak --
 grant select on MIMI.* to Analista1;
-grant select on MIMI.* to Analista2;
+-- grant select on MIMI.* to Analista2;
 
 -- Langileen baimenak --
 -- ikusi guztia baina aldatu taula batzuk(adminean aldatu daitezke geratzen direnak) --
@@ -74,9 +74,11 @@ create user IT identified by "1234";
 grant DB_Administratzailea to Zuzendaria;
 grant Departamentu_burua to GizaBaliabidea;
 grant Analista1 to Salmenta;
-grant Analista2 to Finantza;
+grant Analista1 to Finantza;
+-- grant Analista2 to Finantza;
 grant Langileak to TecEstrategia;
-grant Bezeroa to Legea;
+grant Langileak to Legea;
+grant Langileak to IT;
 
 select * from mysql.user;
 show grants for Zuzendaria;
@@ -87,4 +89,7 @@ show grants for TecEstrategia;
 show grants for Legea;
 show grants for IT;
 
-select MIMI.abestia
+select MIMI.abestia;
+
+select * from mysql.user;
+SHOW GRANTS FOR Bezeroa;
