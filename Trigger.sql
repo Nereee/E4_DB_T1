@@ -1,17 +1,45 @@
+use MIMI;
+
+
+
+-- Debug album iraupena insert
+CREATE TABLE DebugLog (
+    Id INT AUTO_INCREMENT PRIMARY KEY,
+    Timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    Message TEXT
+);
+
+
+
 -- Egin behar (Albumaren Iraupena ateratzeko)
 
+DROP TRIGGER IF EXISTS IraupenakGehitu 
+
+
 DELIMITER //
-drop trigger if exists IraupenakGehitu//
-create trigger IraupenakGehitu
-AFTER insert on Audio
-for each row
-begin
--- Funtzio hau erabili eragiketa egiteko
-SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(Iraupena))) AS TotalDuration
-FROM Audio
-INNER JOIN Abestia USING (IdAudio)
-where IdAudio = new.IdAudio;
-end;
+
+CREATE TRIGGER IraupenakGehitu AFTER INSERT ON Abestia
+FOR EACH ROW 
+BEGIN 
+    DECLARE albumIraupena TIME;
+
+    -- Obtener la duración total del álbum asociado al nuevo audio
+    SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(Audio.Iraupena))) INTO albumIraupena
+    FROM Audio
+    INNER JOIN Abestia ON Audio.IdAudio = Abestia.IdAudio
+    WHERE Abestia.IdAlbum = NEW.IdAlbum;
+
+    -- Registro del mensaje de depuración
+    INSERT INTO DebugLog (Message) VALUES (CONCAT('Nuevo audio insertado en Abestia. Duración del álbum: ', albumIraupena));
+
+    -- Actualizar la duración del álbum
+    UPDATE Album
+    SET Iraupena = albumIraupena
+    WHERE IdAlbum = NEW.IdAlbum;
+END;
+//
+
+
 
 DELIMITER //
 drop trigger if exists AbestiaGehitu//
@@ -23,6 +51,7 @@ begin
     SET Entzundakoa = Entzundakoa + 1
     WHERE IdAudio = NEW.IdAudio;
 end;
+//
 
 DELIMITER //
 DROP TRIGGER IF exists BezeroPremium//
@@ -34,7 +63,7 @@ begin
     insert into premium (IdBezeroa, Iraungitzedata) values (NEW.IdBezeroa, DATE_ADD(CURRENT_DATE(), INTERVAL 1 YEAR));
     END IF;
 end;
-
+//
 
 create table BezeroDesaktibatuak (
 IdBezeroa varchar(7) primary key,

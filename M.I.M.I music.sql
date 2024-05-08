@@ -1,3 +1,6 @@
+use MIMI;
+
+
 drop database if exists MIMI;
 create database MIMI
 collate utf8mb4_spanish_ci;
@@ -120,3 +123,4 @@ Entzundakoa int not null,
 playlist int not null,
 foreign key (IdAudio) references Audio(IdAudio)
 );
+
