@@ -56,7 +56,7 @@ end;
 DELIMITER //
 DROP TRIGGER IF exists BezeroPremium//
 create trigger BezeroPremium
-after insert on Bezeroa
+after update on Bezeroa
 for each row 
 begin
 	if new.mota = "premium" THEN 
