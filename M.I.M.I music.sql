@@ -121,3 +121,19 @@ playlist int not null,
 foreign key (IdAudio) references Audio(IdAudio)
 );
 
+
+create table BezeroDesaktibatuak (
+IdBezeroa varchar(7) primary key,
+Izena varchar(10) not null,
+Abizena varchar(15) not null,
+Hizkuntza enum("ES", "EU", "EN", "FR", "DE", "CA", "GA", "AR") not null,
+erabiltzailea varchar(10) not null unique,
+pasahitza varchar(10) not null,
+jaiotzedata date not null,
+Erregistrodata date not null,
+Iraungitzedata date not null,
+mota enum("premium","free"),
+foreign key (Hizkuntza) references Hizkuntza(IdHizkuntza) on delete cascade on update cascade,
+foreign key (IdBezeroa) references Bezeroa(IdBezeroa) on delete cascade on update cascade
+);
+

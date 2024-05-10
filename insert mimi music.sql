@@ -179,8 +179,12 @@ VALUES
     ('BZ002', 'Ane', 'Lopez', 'ES', 'anelop', 'ane123', '1995-10-20', '2023-02-12', 'free'),
     ('BZ003', 'Mark', 'Smith', 'EN', 'mark123', 'mark456', '1988-07-30', '2023-02-15', 'premium'),
     ('BZ004', 'María', 'García', 'ES', 'maria12', 'maria456', '1998-03-25', '2023-02-20', 'free'),
-     ('BZ005', 'b', 'b', 'EU', 'b', 'b', '1990-05-15', '2023-02-10', 'free');
+	('BZ005', 'b', 'b', 'EU', 'b', 'b', '1990-05-15', '2023-02-10', 'free');
     
+INSERT INTO premium (IdBezeroa,Iraungitzedata)
+VALUES 
+("BZ001","2024-05-11"),
+("BZ003","2024-05-11");
     INSERT INTO Playlist (IdList, Izenburua, Sorreradata, IdBezeroa)
 VALUES 
     ('PL001', 'Rock Hits', '2023-02-12', 'BZ001'),

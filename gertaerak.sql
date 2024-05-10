@@ -1,3 +1,20 @@
+USE MIMI;
+
+SET GLOBAL event_scheduler = ON;
+
+DROP EVENT IF EXISTS eguneroPremiumMugaEvent;
+
+DELIMITER //
+CREATE EVENT IF NOT EXISTS eguneroPremiumMugaEvent
+ON SCHEDULE
+    EVERY 1 DAY
+    STARTS CURRENT_TIMESTAMP
+DO
+BEGIN
+    CALL premiumMugaProcedure();
+END //
+DELIMITER ;
+
 delimiter //
 drop event if exists EguneratuEstadistikak//
 CREATE EVENT EguneratuEstadistikak
@@ -47,5 +64,35 @@ end while;
 
 end;
 
+
+DELIMITER //
+CREATE EVENT EguneratuPremiumKontuak
+ON SCHEDULE EVERY 1 DAY
+STARTS CURRENT_TIMESTAMP
+DO
+BEGIN
+    DECLARE idBezeroa VARCHAR(7);
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE amaiera INT DEFAULT 0;
+
+    DECLARE c CURSOR FOR
+        SELECT IdBezeroa
+        FROM premium;
+
+    DECLARE CONTINUE HANDLER FOR NOT FOUND
+        SET done = TRUE;
+    OPEN c;
+    WHILE amaiera = 0 DO
+        FETCH c INTO idBezeroa;
+        IF done THEN
+            SET amaiera = 1;
+        ELSE
+            CALL premiumMuga(idBezeroa);
+        END IF;
+    END WHILE;
+    CLOSE c;
+END;
+//
+DELIMITER ;
 
 
