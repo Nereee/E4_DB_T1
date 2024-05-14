@@ -40,6 +40,7 @@ begin
 end;
  //
 
+
 -- función para obtener el número de canciones favoritas de un usuario
 delimiter //
 drop function if exists zenbatabestigustuko//
@@ -47,20 +48,37 @@ create function zenbatabestigustuko(idbezeroa varchar(7)) returns int
 reads sql data
 begin
     declare zenbatabestigustuko int;
-    select count(*) into zenbatabestigustuko
-    from gustukoak
-    where idbezeroa = id_usuario;
-    return zenbatabestigustuko;
+
+  if length(idbezeroa) != 7 then
+    
+        signal sqlstate '45000' set message_text = 'Sartutako aldagaia ez da baliozkoa';
+		end if;
+
+		select count(*) into zenbatabestigustuko
+		from gustukoak
+		where idbezeroa = idbezeroa;
+		return zenbatabestigustuko;
 end; 
 //
+
+
+
+--   premium tartea
+
 
 delimiter //
 drop procedure if exists bezeroapremium//
 create procedure  bezeroapremium(idbezeroa varchar(7)) begin
 declare aurkitu boolean default 1;
 
+
 declare continue handler for sqlstate '23000'
 set aurkitu = 0;
+
+  if length(idbezeroa) != 7 then
+       
+        signal sqlstate '45000' set message_text = 'Sartutako aldagaia ez da baliozkoa';
+		end if;
 
 select idbezeroa 
 from premium
@@ -76,116 +94,86 @@ end;
 
 
 
---   premium tartea
 
+DELIMITER //
+-- Bezeroen iraungitzedata gaur baino txikiagoa ba da, mota free jarri, premiun taulatik ezabatu eta bezero desaktibatuan sartu.
+DROP PROCEDURE IF EXISTS premiummuga//
 
-
-delimiter //
-drop procedure if exists premiummugaprocedure//
-create procedure premiummugaprocedure(bezerokant int)
-begin
-	declare idbezeroa varchar(7);
-    declare bukle int;
-    set bukle = 0;
+CREATE PROCEDURE premiummuga()
+BEGIN
+    DECLARE gaur DATE;
+    DECLARE idbezero VARCHAR(7);
+    DECLARE iraungitzedat  DATE;
+	declare amaiera bool default 1;
     
-      while bezerokant > bukle do
-        
-            select 'idbezeroa: ', idbezeroa; -- agregar este mensaje de depuración
-            -- deitu premium muga procedure idbezeroarekin
-            call premiummuga(idbezeroa);
-           set bukle = bukle + 1;
-    end while;
+	declare c cursor for -- deklaratu kurtsorea
+	SELECT idbezeroa, iraungitzedata
+	FROM premium;
 
-end//
-delimiter ;
-
-delimiter //
-drop procedure if exists premiummuga//
-create procedure premiummuga(idbezero varchar(7))
-begin
-    declare gaur date;
-    declare premiummugadata date;
+	declare exit handler for 1329
+	select ("Ez dago premium gaurko mugarekin") as ErroreMezua1;
     
-    set gaur = curdate();
+	declare continue handler for not found -- errorea, out of bounds (Array moduko estrukturatik irtetean)
+	set amaiera = 0;
+    SET gaur = CURDATE();
+    
+    open c; -- Ireki kurtsorea
 
-    select iraungitzedata into premiummugadata
-    from premium
-    where idbezeroa = idbezero;
+    while amaiera = 1 do
+	FETCH c INTO idbezero, iraungitzedat;
+    select concat(idbezero, " idbezeroa ,  " , iraungitzedat ," iraungitze data ") as Info;
+    
+    
+	IF TIMESTAMPDIFF(DAY, gaur, iraungitzedat) < 0 THEN
+		
+        select concat(idbezero, " idbezeroa ,  " , iraungitzedat ," iraungitze data, gaur baino txikiago da ") as Info2;
 
-    if premiummugadata is not null then
-        select 'premium muga data: ', premiummugadata;
-
-        if timestampdiff(day, gaur, premiummugadata) < 0 then
-            -- cambiar el tipo de cliente a 'free' en la tabla 'bezeroa'
+            -- aldatu bezero mota
             update bezeroa
             set mota = 'free'
             where idbezeroa = idbezero; 
             
-            -- insertar el cliente desactivado en la tabla 'bezerodesaktibatuak'
+            -- ezarri bezeroaren informazioa 'bezerodesaktibatuak' taulan
             insert into bezerodesaktibatuak (idbezeroa, izena, abizena, hizkuntza, erabiltzailea, pasahitza, jaiotzedata, erregistrodata, iraungitzedata, mota)
             select b.idbezeroa, b.izena, b.abizena, b.hizkuntza, b.erabiltzailea, b.pasahitza, b.jaiotzedata, b.erregistrodata, p.iraungitzedata, b.mota
             from bezeroa b
             join premium p on b.idbezeroa = p.idbezeroa
             where b.idbezeroa = idbezero;
         
-            -- eliminar al cliente premium llamando al procedimiento eliminarpremium
-            call eliminarpremium(idbezero);
-        end if;
-    else
-        select 'error: no se encontró fecha de vencimiento para el cliente ', idbezero;
-    end if;
-end //
+            -- 
+            call kendupremium(idbezero);
+    
+    
+      END IF;
+    END WHILE;
 
-delimiter ;
+    CLOSE c;
+END //
+
+DELIMITER ;
 
 
- -- eliminar al cliente premium llamando al procedimiento eliminarpremium
+ -- ezabatu bezeroa premiun taulatik
 delimiter //
-drop procedure if exists eliminarpremium//
-create procedure eliminarpremium(idbezero varchar(7))
+drop procedure if exists kendupremium//
+create procedure kendupremium(idbezero varchar(7))
 begin
-    -- eliminar al cliente premium de la tabla 'premium'
+    
+    declare exit handler for 1329
+	select ("Ez dago premium gaurko mugarekin") as ErroreMezua1;
+    
     delete from premium
     where idbezeroa = idbezero;
 end //
-
-
-
-
-
-delimiter //
-drop procedure if exists premiumbezerokant//
-create procedure premiumbezerokant()
-begin
-    declare bezerokant bigint default 0;
-    set bezerokant = (select count(idbezeroa) from premium);
-    call premiummugaprocedure(bezerokant);
-end;
-//
-
-
--- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 delimiter //
 drop procedure if exists premiumberrezari//
 create procedure premiumberrezari(id varchar(7))
 begin
+
+  if length(idbezeroa) != 7 then
+        signal sqlstate '45000' set message_text = 'Sartutako aldagaia ez da baliozkoa';
+		end if;
     if exists (select * from bezerodesaktibatuak where idbezeroa = id) then
         if exists (select * from bezeroa where idbezeroa = id and mota = 'premium') then
             delete from bezerodesaktibatuak

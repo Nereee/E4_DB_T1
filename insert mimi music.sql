@@ -1,4 +1,4 @@
-use MIMI;
+use mimi;
 
 
 -- Musikariaren tablako insert guztiak

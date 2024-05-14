@@ -1,7 +1,5 @@
 use mimi;
 
-
-
 -- debug album iraupena insert
 create table albumiraupenakinsert (
     id int auto_increment primary key,
@@ -65,20 +63,6 @@ begin
 end;
 //
 
-delimiter //
-drop trigger if exists bezerodesaktibatu//
-create trigger bezerodesaktibatu
-before delete on premium
-for each row
-begin
-
-    declare id_bezero varchar(7);
-    
-    select idbezeroa into id_bezero from bezeroa where idbezeroa = old.idbezeroa;
-    
-    delete from premium where idbezeroa = old.idbezeroa;
-end;
-//
 
 
 
