@@ -1,18 +1,18 @@
-USE MIMI;
+use mimi;
 
-SET GLOBAL event_scheduler = ON;
+set global event_scheduler = on;
 
-DROP EVENT IF EXISTS eguneroPremiumMugaEvent;
+drop event if exists eguneropremiummugaevent;
 
-DELIMITER //
-CREATE EVENT IF NOT EXISTS eguneroPremiumMugaEvent
-ON SCHEDULE
-    EVERY 1 DAY
-    STARTS CURRENT_TIMESTAMP
-DO
-BEGIN
-    CALL premiumMugaProcedure();
-END //
-DELIMITER ;
-SHOW EVENTS;
-SELECT * FROM information_schema.events WHERE event_name = 'eguneroPremiumMugaEvent';
+delimiter //
+create event if not exists eguneropremiummugaevent
+on schedule
+    every 1 day
+    starts current_timestamp
+do
+begin
+    call premiummugaprocedure();
+end //
+delimiter ;
+show events;
+select * from information_schema.events where event_name = 'eguneropremiummugaevent';

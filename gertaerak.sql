@@ -1,98 +1,98 @@
-USE MIMI;
+use mimi;
 
-SET GLOBAL event_scheduler = ON;
+set global event_scheduler = on;
 
-DROP EVENT IF EXISTS eguneroPremiumMugaEvent;
-
-DELIMITER //
-CREATE EVENT IF NOT EXISTS eguneroPremiumMugaEvent
-ON SCHEDULE
-    EVERY 1 DAY
-    STARTS CURRENT_TIMESTAMP
-DO
-BEGIN
-    CALL premiumMugaProcedure();
-END //
-DELIMITER ;
+drop event if exists eguneropremiummugaevent;
 
 delimiter //
-drop event if exists EguneratuEstadistikak//
-CREATE EVENT EguneratuEstadistikak
-ON SCHEDULE EVERY 1 DAY
-STARTS CURRENT_TIMESTAMP
-DO
-    BEGIN
-     UPDATE Estatistikak
-        SET  Entzundakoa = (
-            SELECT SUM(Entzundakoa)
-            FROM Estatistikak
-            WHERE data = CURDATE()
-        )
-        WHERE data = CURDATE();
-END;
+create event if not exists eguneropremiummugaevent
+on schedule
+    every 1 day
+    starts current_timestamp
+do
+begin
+    call premiummugaprocedure();
+end //
+delimiter ;
 
-DELIMITER //
-drop event if exists BezeroDesaktibatu//
-create event BezeroDesaktibatu
-ON SCHEDULE EVERY 1 DAY
-STARTS CURRENT_TIMESTAMP
-DO
+delimiter //
+drop event if exists eguneratuestadistikak//
+create event eguneratuestadistikak
+on schedule every 1 day
+starts current_timestamp
+do
+    begin
+     update estatistikak
+        set  entzundakoa = (
+            select sum(entzundakoa)
+            from estatistikak
+            where data = curdate()
+        )
+        where data = curdate();
+end;
+
+delimiter //
+drop event if exists bezerodesaktibatu//
+create event bezerodesaktibatu
+on schedule every 1 day
+starts current_timestamp
+do
 begin
 declare amaiera bool default 0;
-declare v_IdBezeroa varchar(7);
-declare v_Izena varchar(10);
-declare v_Abizena varchar(15);
-declare v_Hizkuntza enum("ES", "EU", "EN", "FR", "DE", "CA", "GA", "AR");
+declare v_idbezeroa varchar(7);
+declare v_izena varchar(10);
+declare v_abizena varchar(15);
+declare v_hizkuntza enum("es", "eu", "en", "fr", "de", "ca", "ga", "ar");
 declare v_erabiltzailea varchar(10);
 declare v_pasahitza varchar(10);
 declare v_jaiotzedata date;
-declare v_Erregistrodata date;
-declare v_Iraungitzedata date;
+declare v_erregistrodata date;
+declare v_iraungitzedata date;
 declare v_mota enum("premium","free");
 declare c cursor for
     
-    select * from Bezeroa inner join premium using (IdBezeroa);
+    select * from bezeroa inner join premium using (idbezeroa);
     
     declare continue handler for not found
 
 set amaiera = 1;
 
 while amaiera = 0 do
-	fetch c into v_IdBezeroa, v_Izena,v_Abizena, v_Hizkuntza,v_erabiltzailea,v_pasahitza,v_jaiotzedata,v_Erregistrodata,v_Iraungitzedata, v_mota;
-	insert into BezeroDesaktibatuak values (v_IdBezeroa, v_Izena,v_Abizena, v_Hizkuntza,v_erabiltzailea,v_pasahitza,v_jaiotzedata,v_Erregistrodata,v_Iraungitzedata, v_mota);
+	fetch c into v_idbezeroa, v_izena,v_abizena, v_hizkuntza,v_erabiltzailea,v_pasahitza,v_jaiotzedata,v_erregistrodata,v_iraungitzedata, v_mota;
+	insert into bezerodesaktibatuak values (v_idbezeroa, v_izena,v_abizena, v_hizkuntza,v_erabiltzailea,v_pasahitza,v_jaiotzedata,v_erregistrodata,v_iraungitzedata, v_mota);
 end while;
 
 end;
 
 
-DELIMITER //
-CREATE EVENT EguneratuPremiumKontuak
-ON SCHEDULE EVERY 1 DAY
-STARTS CURRENT_TIMESTAMP
-DO
-BEGIN
-    DECLARE idBezeroa VARCHAR(7);
-    DECLARE done INT DEFAULT FALSE;
-    DECLARE amaiera INT DEFAULT 0;
+delimiter //
+create event eguneratupremiumkontuak
+on schedule every 1 day
+starts current_timestamp
+do
+begin
+    declare idbezeroa varchar(7);
+    declare done int default false;
+    declare amaiera int default 0;
 
-    DECLARE c CURSOR FOR
-        SELECT IdBezeroa
-        FROM premium;
+    declare c cursor for
+        select idbezeroa
+        from premium;
 
-    DECLARE CONTINUE HANDLER FOR NOT FOUND
-        SET done = TRUE;
-    OPEN c;
-    WHILE amaiera = 0 DO
-        FETCH c INTO idBezeroa;
-        IF done THEN
-            SET amaiera = 1;
-        ELSE
-            CALL premiumMuga(idBezeroa);
-        END IF;
-    END WHILE;
-    CLOSE c;
-END;
+    declare continue handler for not found
+        set done = true;
+    open c;
+    while amaiera = 0 do
+        fetch c into idbezeroa;
+        if done then
+            set amaiera = 1;
+        else
+            call premiummuga(idbezeroa);
+        end if;
+    end while;
+    close c;
+end;
 //
-DELIMITER ;
+delimiter ;
 
 

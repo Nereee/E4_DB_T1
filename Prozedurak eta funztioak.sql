@@ -1,73 +1,73 @@
 #---------------------------prozedurak/funtzioak---------------------------------------------
 
--- Función para Calcular la Duración Total de un Álbum
-DELIMITER //
-drop function if exists AlbumarenIraupena//
-CREATE FUNCTION AlbumarenIraupena(id_album VARCHAR(7)) RETURNS TIME
+-- función para calcular la duración total de un álbum
+delimiter //
+drop function if exists albumareniraupena//
+create function albumareniraupena(id_album varchar(7)) returns time
 reads sql data
-BEGIN
-    DECLARE IraupenaTotala TIME;
-    SELECT SEC_TO_TIME(SUM(TIME_TO_SEC(Iraupena))) INTO IraupenaTotala
-    FROM Abestia
-    WHERE IdAlbum = id_album;
-    RETURN IraupenaTotala;
-END;
+begin
+    declare iraupenatotala time;
+    select sec_to_time(sum(time_to_sec(iraupena))) into iraupenatotala
+    from abestia
+    where idalbum = id_album;
+    return iraupenatotala;
+end;
 //
 
--- Procedimiento para Actualizar Estadísticas
-DELIMITER //
-drop procedure if exists estadistikakEguneratu//
-CREATE PROCEDURE estadistikakEguneratu(id_audio VARCHAR(7))
+-- procedimiento para actualizar estadísticas
+delimiter //
+drop procedure if exists estadistikakeguneratu//
+create procedure estadistikakeguneratu(id_audio varchar(7))
 reads sql data
-BEGIN
-    UPDATE Estatistikak
-    SET GustukoAbestiak = (SELECT COUNT(*) FROM gustukoak WHERE IdAudio = id_audio),
-        GustokoPodcaster = (SELECT COUNT(*) FROM Podcast WHERE IdAudio = id_audio),
-        Entzundakoa = (SELECT COUNT(*) FROM Erreprodukzioak WHERE IdAudio = id_audio),
-        playlist = (SELECT COUNT(*) FROM playlist_abestiak WHERE IdAudio = id_audio);
-END; 
+begin
+    update estatistikak
+    set gustukoabestiak = (select count(*) from gustukoak where idaudio = id_audio),
+        gustokopodcaster = (select count(*) from podcast where idaudio = id_audio),
+        entzundakoa = (select count(*) from erreprodukzioak where idaudio = id_audio),
+        playlist = (select count(*) from playlist_abestiak where idaudio = id_audio);
+end; 
 //
 
--- Función para Calcular la Edad de un Usuario
-drop function if exists BezeroarenAdina;
-DELIMITER //
-CREATE FUNCTION BezeroarenAdina(jaio_data DATE) RETURNS INT
+-- función para calcular la edad de un usuario
+drop function if exists bezeroarenadina;
+delimiter //
+create function bezeroarenadina(jaio_data date) returns int
 reads sql data
-BEGIN
-    DECLARE adina INT;
-    SET adina = (CURRENT_DATE()) - (jaio_data);
-    RETURN adina;
-END;
+begin
+    declare adina int;
+    set adina = (current_date()) - (jaio_data);
+    return adina;
+end;
  //
 
--- Función para Obtener el Número de Canciones Favoritas de un Usuario
-DELIMITER //
-drop function if exists ZenbatAbestiGustuko//
-CREATE FUNCTION ZenbatAbestiGustuko(IdBezeroa VARCHAR(7)) RETURNS INT
+-- función para obtener el número de canciones favoritas de un usuario
+delimiter //
+drop function if exists zenbatabestigustuko//
+create function zenbatabestigustuko(idbezeroa varchar(7)) returns int
 reads sql data
-BEGIN
-    DECLARE ZenbatAbestiGustuko INT;
-    SELECT COUNT(*) INTO ZenbatAbestiGustuko
-    FROM gustukoak
-    WHERE IdBezeroa = id_usuario;
-    RETURN ZenbatAbestiGustuko;
-END; 
+begin
+    declare zenbatabestigustuko int;
+    select count(*) into zenbatabestigustuko
+    from gustukoak
+    where idbezeroa = id_usuario;
+    return zenbatabestigustuko;
+end; 
 //
 
-Delimiter //
-drop procedure if exists BezeroaPremium//
-create procedure  BezeroaPremium(IdBezeroa varchar(7)) begin
+delimiter //
+drop procedure if exists bezeroapremium//
+create procedure  bezeroapremium(idbezeroa varchar(7)) begin
 declare aurkitu boolean default 1;
 
 declare continue handler for sqlstate '23000'
 set aurkitu = 0;
 
-select IdBezeroa 
+select idbezeroa 
 from premium
-where IdBezeroa = IdBezeroa;
+where idbezeroa = idbezeroa;
 
 if aurkitu = 0 then
-select concat ('Hemen sartu da') ERROREA;
+select concat ('hemen sartu da') errorea;
 end if;
 end;
 //
@@ -76,91 +76,91 @@ end;
 
 
 
---   PREMIUM TARTEA
+--   premium tartea
 
 
 
-DELIMITER //
-DROP PROCEDURE IF EXISTS premiumMugaProcedure//
-CREATE PROCEDURE premiumMugaProcedure(bezeroKant int)
-BEGIN
-	DECLARE IdBezeroa VARCHAR(7);
-    DECLARE bukle INT;
-    SET bukle = 0;
+delimiter //
+drop procedure if exists premiummugaprocedure//
+create procedure premiummugaprocedure(bezerokant int)
+begin
+	declare idbezeroa varchar(7);
+    declare bukle int;
+    set bukle = 0;
     
-      WHILE bezeroKant > bukle DO
+      while bezerokant > bukle do
         
-            SELECT 'IdBezeroa: ', IdBezeroa; -- Agregar este mensaje de depuración
-            -- Deitu Premium muga procedure idbezeroarekin
-            CALL premiumMuga(IdBezeroa);
-           SET bukle = bukle + 1;
-    END WHILE;
+            select 'idbezeroa: ', idbezeroa; -- agregar este mensaje de depuración
+            -- deitu premium muga procedure idbezeroarekin
+            call premiummuga(idbezeroa);
+           set bukle = bukle + 1;
+    end while;
 
-END//
-DELIMITER ;
+end//
+delimiter ;
 
-DELIMITER //
-DROP PROCEDURE IF EXISTS premiumMuga//
-CREATE PROCEDURE premiumMuga(IdBezero VARCHAR(7))
-BEGIN
-    DECLARE gaur DATE;
-    DECLARE premiumMugaData DATE;
+delimiter //
+drop procedure if exists premiummuga//
+create procedure premiummuga(idbezero varchar(7))
+begin
+    declare gaur date;
+    declare premiummugadata date;
     
-    SET gaur = CURDATE();
+    set gaur = curdate();
 
-    SELECT Iraungitzedata INTO premiumMugaData
-    FROM premium
-    WHERE IdBezeroa = IdBezero;
+    select iraungitzedata into premiummugadata
+    from premium
+    where idbezeroa = idbezero;
 
-    IF premiumMugaData IS NOT NULL THEN
-        SELECT 'Premium muga data: ', premiumMugaData;
+    if premiummugadata is not null then
+        select 'premium muga data: ', premiummugadata;
 
-        IF TIMESTAMPDIFF(DAY, gaur, premiumMugaData) < 0 THEN
-            -- Cambiar el tipo de cliente a 'Free' en la tabla 'Bezeroa'
-            UPDATE Bezeroa
-            SET mota = 'Free'
-            WHERE IdBezeroa = IdBezero; 
+        if timestampdiff(day, gaur, premiummugadata) < 0 then
+            -- cambiar el tipo de cliente a 'free' en la tabla 'bezeroa'
+            update bezeroa
+            set mota = 'free'
+            where idbezeroa = idbezero; 
             
-            -- Insertar el cliente desactivado en la tabla 'BezeroDesaktibatuak'
-            INSERT INTO BezeroDesaktibatuak (IdBezeroa, Izena, Abizena, Hizkuntza, erabiltzailea, pasahitza, jaiotzedata, Erregistrodata, Iraungitzedata, mota)
-            SELECT b.IdBezeroa, b.Izena, b.Abizena, b.Hizkuntza, b.erabiltzailea, b.pasahitza, b.jaiotzedata, b.Erregistrodata, p.Iraungitzedata, b.mota
-            FROM Bezeroa b
-            JOIN premium p ON b.IdBezeroa = p.IdBezeroa
-            WHERE b.IdBezeroa = IdBezero;
+            -- insertar el cliente desactivado en la tabla 'bezerodesaktibatuak'
+            insert into bezerodesaktibatuak (idbezeroa, izena, abizena, hizkuntza, erabiltzailea, pasahitza, jaiotzedata, erregistrodata, iraungitzedata, mota)
+            select b.idbezeroa, b.izena, b.abizena, b.hizkuntza, b.erabiltzailea, b.pasahitza, b.jaiotzedata, b.erregistrodata, p.iraungitzedata, b.mota
+            from bezeroa b
+            join premium p on b.idbezeroa = p.idbezeroa
+            where b.idbezeroa = idbezero;
         
-            -- Eliminar al cliente premium llamando al procedimiento eliminarPremium
-            CALL eliminarPremium(IdBezero);
-        END IF;
-    ELSE
-        SELECT 'Error: No se encontró fecha de vencimiento para el cliente ', IdBezero;
-    END IF;
-END //
+            -- eliminar al cliente premium llamando al procedimiento eliminarpremium
+            call eliminarpremium(idbezero);
+        end if;
+    else
+        select 'error: no se encontró fecha de vencimiento para el cliente ', idbezero;
+    end if;
+end //
 
-DELIMITER ;
-
-
- -- Eliminar al cliente premium llamando al procedimiento eliminarPremium
-DELIMITER //
-DROP PROCEDURE IF EXISTS eliminarPremium//
-CREATE PROCEDURE eliminarPremium(IdBezero VARCHAR(7))
-BEGIN
-    -- Eliminar al cliente premium de la tabla 'premium'
-    DELETE FROM premium
-    WHERE IdBezeroa = IdBezero;
-END //
+delimiter ;
 
 
+ -- eliminar al cliente premium llamando al procedimiento eliminarpremium
+delimiter //
+drop procedure if exists eliminarpremium//
+create procedure eliminarpremium(idbezero varchar(7))
+begin
+    -- eliminar al cliente premium de la tabla 'premium'
+    delete from premium
+    where idbezeroa = idbezero;
+end //
 
 
 
-DELIMITER //
-drop procedure if exists premiumBezeroKant//
-CREATE procedure premiumBezeroKant()
-BEGIN
-    declare bezeroKant bigint default 0;
-    set bezeroKant = (SELECT COUNT(IdBezeroa) FROM premium);
-    call premiumMugaProcedure(bezeroKant);
-END;
+
+
+delimiter //
+drop procedure if exists premiumbezerokant//
+create procedure premiumbezerokant()
+begin
+    declare bezerokant bigint default 0;
+    set bezerokant = (select count(idbezeroa) from premium);
+    call premiummugaprocedure(bezerokant);
+end;
 //
 
 
@@ -182,17 +182,17 @@ END;
 
 
 
-DELIMITER //
-DROP PROCEDURE IF EXISTS premiumBerrezari//
-CREATE PROCEDURE premiumBerrezari(Id VARCHAR(7))
-BEGIN
-    IF EXISTS (SELECT * FROM BezeroDesaktibatuak WHERE IdBezeroa = Id) THEN
-        IF EXISTS (SELECT * FROM Bezeroa WHERE IdBezeroa = Id AND mota = 'premium') THEN
-            DELETE FROM BezeroDesaktibatuak
-            WHERE IdBezeroa = Id;
-        END IF;
-    END IF;
-END //
-DELIMITER ;
+delimiter //
+drop procedure if exists premiumberrezari//
+create procedure premiumberrezari(id varchar(7))
+begin
+    if exists (select * from bezerodesaktibatuak where idbezeroa = id) then
+        if exists (select * from bezeroa where idbezeroa = id and mota = 'premium') then
+            delete from bezerodesaktibatuak
+            where idbezeroa = id;
+        end if;
+    end if;
+end //
+delimiter ;
 
 
