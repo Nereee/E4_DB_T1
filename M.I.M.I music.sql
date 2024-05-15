@@ -106,7 +106,7 @@ foreign key (idaudio) references audio(idaudio) on delete cascade on update casc
 create table erreprodukzioak (
 idbezeroa varchar(7),
 idaudio varchar(7),
-data date,
+data datetime,
 primary key (idbezeroa,idaudio, data),
 foreign key (idbezeroa) references bezeroa(idbezeroa) on delete cascade on update cascade,
 foreign key (idaudio) references audio(idaudio) on delete cascade on update cascade
@@ -135,5 +135,14 @@ iraungitzedata date not null,
 mota enum("premium","free"),
 foreign key (hizkuntza) references hizkuntza(idhizkuntza) on delete cascade on update cascade,
 foreign key (idbezeroa) references bezeroa(idbezeroa) on delete cascade on update cascade
+);
+
+create table admintaula(
+idbezeroa varchar(7) primary key,
+hizkuntza enum("es", "eu", "en", "fr", "de", "ca", "ga", "ar") not null,
+erabiltzailea varchar(10) not null unique,
+pasahitza varchar(10) not null,
+erregistrodata date not null,
+constraint v_idbezero2 foreign key (hizkuntza) references hizkuntza(idhizkuntza) on delete cascade on update cascade
 );
 

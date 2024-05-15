@@ -13,6 +13,7 @@ begin
     return iraupenatotala;
 end;
 //
+delimiter;
 
 -- procedimiento para actualizar estadísticas
 delimiter //
@@ -27,10 +28,11 @@ begin
         playlist = (select count(*) from playlist_abestiak where idaudio = id_audio);
 end; 
 //
+delimiter;
 
 -- función para calcular la edad de un usuario
-drop function if exists bezeroarenadina;
 delimiter //
+drop function if exists bezeroarenadina//
 create function bezeroarenadina(jaio_data date) returns int
 reads sql data
 begin
@@ -39,6 +41,7 @@ begin
     return adina;
 end;
  //
+delimiter;
 
 
 -- función para obtener el número de canciones favoritas de un usuario
@@ -60,6 +63,7 @@ begin
 		return zenbatabestigustuko;
 end; 
 //
+delimiter;
 
 -- insert erreprodukzioak procedure:
 
@@ -68,34 +72,13 @@ drop procedure if exists erreprodukzioagehitu//
 create procedure erreprodukzioagehitu(idbezeroa varchar(7),idaudio varchar(7))
 reads sql data
 
-  if length(idbezeroa) != 7 or length(idaudio) != 7 then
-    
-        signal sqlstate '45000' set message_text = 'Sartutako aldagaia ez da baliozkoa';
-		end if;
-
 begin
-    insert into erreprodukzioak values (idbezeroa,idaudio, datetime );
+    insert into erreprodukzioak values (idbezeroa,idaudio, timestamp );
 end;
 //
+delimiter;
 
 -- insert erreprodukzioak procedure:
-
-
-
-
-
-
--- 
-
-
-
-
-
-
-
-
-
-
 
 --   premium tartea
 
@@ -123,6 +106,7 @@ select concat ('hemen sartu da') errorea;
 end if;
 end;
 //
+delimiter;
 
 
 
@@ -199,19 +183,20 @@ begin
     delete from premium
     where idbezeroa = idbezero;
 end //
+DELIMITER ;
 
 delimiter //
 drop procedure if exists premiumberrezari//
-create procedure premiumberrezari(id varchar(7))
+create procedure premiumberrezari(idbezero varchar(7))
 begin
 
-  if length(idbezeroa) != 7 then
+  if length(idbezero) != 7 then
         signal sqlstate '45000' set message_text = 'Sartutako aldagaia ez da baliozkoa';
 		end if;
     if exists (select * from bezerodesaktibatuak where idbezeroa = id) then
         if exists (select * from bezeroa where idbezeroa = id and mota = 'premium') then
             delete from bezerodesaktibatuak
-            where idbezeroa = id;
+            where idbezeroa = idbezero;
         end if;
     end if;
 end //

@@ -177,8 +177,22 @@ VALUES
     ('BZ003', 'Mark', 'Smith', 'EN', 'mark123', 'mark456', '1988-07-30', '2023-02-15', 'premium'),
     ('BZ004', 'María', 'García', 'ES', 'maria12', 'maria456', '1998-03-25', '2023-02-20', 'free');
     
+<<<<<<< HEAD
     INSERT INTO Playlist (IdList, Izenburua, Sorreradata, IdBezeroa)
 VALUES 
+=======
+insert into admintaula (idbezeroa,hizkuntza, erabiltzailea, pasahitza, erregistrodata)
+values 
+    ('AD001', 'ES', 'ad', 'ad', '2023-02-10' ),
+     ('AD002', 'ES', 'admin', 'admin', '2023-03-10' );
+    
+insert into premium (idbezeroa,iraungitzedata)
+values 
+("BZ001","2024-05-11"),
+("BZ003","2024-05-11");
+    insert into playlist (idlist, izenburua, sorreradata, idbezeroa)
+values 
+>>>>>>> 4759e48446a5b5773a355a642a69fafd8cb42605
     ('PL001', 'Rock Hits', '2023-02-12', 'BZ001'),
     ('PL002', 'Chillout Vibes', '2023-02-15', 'BZ002'),
     ('PL003', 'Party Time', '2023-02-20', 'BZ003'),
@@ -205,6 +219,7 @@ VALUES
     ('BZ004', 'XIAU3'),
     ('BZ004', 'BUAU2');
 
+<<<<<<< HEAD
 INSERT INTO Erreprodukzioak (IdBezeroa, IdAudio, data)
 VALUES 
     ('BZ001', 'ESAU1', '2023-02-10'),
@@ -212,6 +227,15 @@ VALUES
     ('BZ003', 'TSAU3', '2023-02-15'),
     ('BZ004', 'XIAU4', '2023-02-20'),
     ('BZ001', 'BUAU1', '2023-02-25');
+=======
+insert into erreprodukzioak (idbezeroa, idaudio, data)
+values 
+    ('BZ001', 'ESAU1', '2023-02-10 15:11:30'),
+    ('BZ002', 'EMAU1', '2023-02-12 16:13:14'),
+    ('BZ003', 'TSAU3', '2023-02-15 14:20:11'),
+    ('BZ004', 'XIAU4', '2023-02-20 12:30:13'),
+    ('BZ001', 'BUAU1', '2023-02-25 11:10:30');
+>>>>>>> 4759e48446a5b5773a355a642a69fafd8cb42605
 
 INSERT INTO Estatistikak (IdAudio, GustukoAbestiak, GustokoPodcaster, Entzundakoa, playlist)
 VALUES 
