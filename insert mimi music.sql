@@ -181,6 +181,11 @@ values
     ('BZ004', 'María', 'García', 'ES', 'maria12', 'maria456', '1998-03-25', '2023-02-20', 'free'),
 	('BZ005', 'b', 'b', 'EU', 'b', 'b', '1990-05-15', '2023-02-10', 'free');
     
+insert into admintaula (idbezeroa,hizkuntza, erabiltzailea, pasahitza, erregistrodata)
+values 
+    ('AD001', 'ES', 'ad', 'ad', '2023-02-10' ),
+     ('AD002', 'ES', 'admin', 'admin', '2023-03-10' );
+    
 insert into premium (idbezeroa,iraungitzedata)
 values 
 ("BZ001","2024-05-11"),
@@ -211,11 +216,11 @@ values
 
 insert into erreprodukzioak (idbezeroa, idaudio, data)
 values 
-    ('BZ001', 'ESAU1', '2023-02-10'),
-    ('BZ002', 'EMAU1', '2023-02-12'),
-    ('BZ003', 'TSAU3', '2023-02-15'),
-    ('BZ004', 'XIAU4', '2023-02-20'),
-    ('BZ001', 'BUAU1', '2023-02-25');
+    ('BZ001', 'ESAU1', '2023-02-10 15:11:30'),
+    ('BZ002', 'EMAU1', '2023-02-12 16:13:14'),
+    ('BZ003', 'TSAU3', '2023-02-15 14:20:11'),
+    ('BZ004', 'XIAU4', '2023-02-20 12:30:13'),
+    ('BZ001', 'BUAU1', '2023-02-25 11:10:30');
 
 insert into estatistikak (idaudio, gustukoabestiak, gustokopodcaster, entzundakoa, playlist)
 values 
