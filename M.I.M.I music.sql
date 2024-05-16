@@ -118,7 +118,7 @@ gustukoabestiak int not null,
 gustokopodcaster int not null,
 entzundakoa int not null,
 playlist int not null,
-foreign key (idaudio) references audio(idaudio)
+foreign key (idaudio) references audio(idaudio) on delete cascade on update cascade
 );
 
 
