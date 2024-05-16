@@ -81,8 +81,8 @@ delimiter;
 -- insert erreprodukzioak procedure:
 
 delimiter //
-drop procedure if exists Musikariagehitu//
-create procedure Musikariagehitu(idmusikaria varchar(7), izenartistikoa varchar(50), ezaugarria enum("bakarlaria","taldea"), deskribapena longtext)
+drop procedure if exists musikariagehitu//
+create procedure musikariagehitu(idmusikaria varchar(7), izenartistikoa varchar(50), ezaugarria enum("bakarlaria","taldea"), deskribapena longtext)
 reads sql data
 
 begin

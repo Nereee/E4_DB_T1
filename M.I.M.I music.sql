@@ -74,7 +74,7 @@ constraint v_idbezero foreign key (hizkuntza) references hizkuntza(idhizkuntza) 
 
 create table playlist (
 idlist varchar(7) primary key,
-izenburua varchar(15) not null,
+izenburua varchar(60) not null,
 sorreradata date not null,
 idbezeroa varchar(7) not null,
  foreign key (idbezeroa) references bezeroa (idbezeroa)on delete cascade on update cascade
