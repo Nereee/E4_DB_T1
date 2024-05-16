@@ -1,12 +1,12 @@
 use mimi;
 
 -- beharrezko rolak sortu --
-drop role if exists db_administratzailea;
-drop role if exists departamentu_burua;
-drop role if exists analista1;
-drop role if exists analista2;
-drop role if exists langileak;
-drop role if exists bezeroa;
+drop role if exists DB_Administratzailea;
+drop role if exists Departamentu_burua;
+drop role if exists Analista1;
+drop role if exists Analista2;
+drop role if exists Langileak;
+drop role if exists Bezeroa;
 
 create role db_administratzailea;
 create role departamentu_burua;
