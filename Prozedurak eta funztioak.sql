@@ -73,7 +73,7 @@ create procedure erreprodukzioagehitu(idbezeroa varchar(7),idaudio varchar(7))
 reads sql data
 
 begin
-    insert into erreprodukzioak values (idbezeroa,idaudio, timestamp );
+    insert into erreprodukzioak values (idbezeroa,idaudio,now());
 end;
 //
 delimiter;
@@ -82,7 +82,7 @@ delimiter;
 
 delimiter //
 drop procedure if exists Musikariagehitu//
-create procedure erreprodukzioagehitu(idmusikaria varchar(7), izenartistikoa varchar(50), ezaugarria enum("bakarlaria","taldea"), deskribapena longtext)
+create procedure Musikariagehitu(idmusikaria varchar(7), izenartistikoa varchar(50), ezaugarria enum("bakarlaria","taldea"), deskribapena longtext)
 reads sql data
 
 begin
