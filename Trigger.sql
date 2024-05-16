@@ -11,11 +11,10 @@ create table albumiraupenakinsert (
 
 -- egin behar (albumaren iraupena ateratzeko)
 
-drop trigger if exists iraupenakgehitu 
 
 
 delimiter //
-
+drop trigger if exists iraupenakgehitu// 
 create trigger iraupenakgehitu after insert on abestia
 for each row 
 begin 
@@ -62,6 +61,30 @@ begin
     end if;
 end;
 //
+
+delimiter //
+drop trigger if exists musikariadelete//
+-- musikariadelete
+create trigger musikariadelete
+before delete on musikaria -- musikaria taulako errenkada bat ezabatu ondoren aktibatzen da
+for each row -- DELETE errenkada bakoitza
+begin
+    -- Ezabatu ezazu kantari horrekin loturiko abestiak
+		delete from audio where idaudio in (
+        select abestia.idaudio from abestia 
+        inner join album  on abestia.idalbum = album.idalbum
+        where album.idmusikaria = OLD.idmusikaria
+    );
+end;
+//
+-- Variable OLD
+-- OLD a diferencia de NEW, almacena el valor de las columnas que van a ser borradas o eliminadas. 
+-- Al igual que pasa con NEW, OLD no está disponible en todas las instrucciones, más concretamente 
+-- el valor no se puede recuperar cuando la instrucción es un INSERT.
+-- Leheneratutako delimitatzailea berreskuratu
+
+
+
 
 
 
