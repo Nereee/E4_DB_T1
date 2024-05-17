@@ -1,122 +1,148 @@
-drop database if exists MIMI;
-create database MIMI
+drop database if exists mimi;
+create database mimi
 collate utf8mb4_spanish_ci;
 
-use MIMI;
+use mimi;
 
-create table Musikaria (
-Idmusikaria varchar(7) primary key,
-IzenArtistikoa varchar(50) unique not null,
-Irudia longblob not null,
-Ezaugarria ENUM("barkalia","taldea") not null,
-Deskribapena longtext not null 
+create table musikaria (
+idmusikaria varchar(7) primary key,
+izenartistikoa varchar(50) unique not null,
+irudia longblob not null,
+ezaugarria enum("bakarlaria","taldea") not null,
+deskribapena longtext not null 
 );
 
-create table Podcaster (
-IdPodcaster varchar(7) primary key,
-IzenArtistikoa varchar(50) unique not null,
-Irudia longblob not null,
-Deskribapena longtext not null 
+create table podcaster (
+idpodcaster varchar(7) primary key,
+izenartistikoa varchar(50) unique not null,
+irudia longblob not null,
+deskribapena longtext not null 
 );
 
-create table Audio (
-IdAudio varchar(7) primary key,
-Izena varchar(40) not null,
-Iraupena time not null,
+create table audio (
+idaudio varchar(7) primary key,
+izena varchar(40) not null,
+iraupena time not null,
 mota enum("podcast","abestia") not null,
-Irudia longblob not null
+irudia longblob not null
 );
 
-create table Podcast (
-IdAudio varchar(7) primary key,
-Kolaboratzaileak varchar(100),
-IdPodcaster varchar(7) not null,
-Deskribapena longtext not null,
-foreign key (IdAudio) references Audio(IdAudio) on delete cascade on update cascade,
-foreign key (IdPodcaster) references Podcaster(IdPodcaster) on delete cascade on update cascade
+create table podcast (
+idaudio varchar(7) primary key,
+kolaboratzaileak varchar(100),
+idpodcaster varchar(7) not null,
+deskribapena longtext not null,
+foreign key (idaudio) references audio(idaudio) on delete cascade on update cascade,
+foreign key (idpodcaster) references podcaster(idpodcaster) on delete cascade on update cascade
 );
 
-create table Album (
-IdAlbum varchar(7) primary key,
-Izenburua varchar(20) not null,
+create table album (
+idalbum varchar(7) primary key,
+izenburua varchar(20) not null,
 urtea date not null,
 generoa varchar(20) not null,
-Idmusikaria varchar(7) not null,
-Kolaboratzaileak varchar(100),
-Iraupena time not null,
-foreign key (Idmusikaria) references Musikaria (Idmusikaria) on update cascade on delete cascade
+idmusikaria varchar(7) not null,
+kolaboratzaileak varchar(100),
+iraupena time not null,
+foreign key (idmusikaria) references musikaria (idmusikaria) on update cascade on delete cascade
 );
 
-create table Abestia (
-IdAudio varchar(7) primary key,
-IdAlbum varchar(7) not null,
-foreign key (IdAudio) references Audio(IdAudio) on delete cascade on update cascade,
-foreign key (IdALbum) references Album(IdAlbum) on delete cascade on update cascade
+create table abestia (
+idaudio varchar(7) primary key,
+idalbum varchar(7) not null,
+foreign key (idaudio) references audio(idaudio) on delete cascade on update cascade,
+foreign key (idalbum) references album(idalbum) on delete cascade on update cascade
 );
 
-create table Hizkuntza (
-IdHizkuntza enum("ES", "EU", "EN", "FR", "DE", "CA", "GA", "AR") primary key,
-Deskribapena varchar(50) not null
+create table hizkuntza (
+idhizkuntza enum("es", "eu", "en", "fr", "de", "ca", "ga", "ar") primary key,
+deskribapena varchar(50) not null
 );
 
-create table Bezeroa (
-IdBezeroa varchar(7) primary key,
-Izena varchar(10) not null,
-Abizena varchar(15) not null,
-Hizkuntza enum("ES", "EU", "EN", "FR", "DE", "CA", "GA", "AR") not null,
+create table bezeroa (
+idbezeroa varchar(7) primary key,
+izena varchar(10) not null,
+abizena varchar(15) not null,
+hizkuntza enum("es", "eu", "en", "fr", "de", "ca", "ga", "ar") not null,
 erabiltzailea varchar(10) not null unique,
 pasahitza varchar(10) not null,
 jaiotzedata date not null,
-Erregistrodata date not null,
+erregistrodata date not null,
 mota enum("premium","free"),
-constraint v_idBezero foreign key (Hizkuntza) references Hizkuntza(IdHizkuntza) on delete cascade on update cascade
+constraint v_idbezero foreign key (hizkuntza) references hizkuntza(idhizkuntza) on delete cascade on update cascade
 );
 
-create table Playlist (
-IdList varchar(7) primary key,
-Izenburua varchar(15) not null,
-Sorreradata date not null,
-IdBezeroa varchar(7) not null,
- foreign key (IdBezeroa) references Bezeroa (IdBezeroa)on delete cascade on update cascade
+create table playlist (
+idlist varchar(7) primary key,
+izenburua varchar(60) not null,
+sorreradata date not null,
+idbezeroa varchar(7) not null,
+ foreign key (idbezeroa) references bezeroa (idbezeroa)on delete cascade on update cascade
 );
 
 create table playlist_abestiak (
-IdAudio varchar(7),
-IdList varchar(7),
+idaudio varchar(7),
+idlist varchar(7),
 data date,
-primary key (IdAudio,IdList, data),
-foreign key (IdAudio) references Abestia(IdAudio) on delete cascade on update cascade,
-foreign key (IdList) references Playlist(IdList) on delete cascade on update cascade
+primary key (idaudio,idlist, data),
+foreign key (idaudio) references abestia(idaudio) on delete cascade on update cascade,
+foreign key (idlist) references playlist(idlist) on delete cascade on update cascade
 );
 
 create table premium (
-IdBezeroa varchar(7) primary key,
-Iraungitzedata date not null,
-foreign key (IdBezeroa) references Bezeroa(IdBezeroa) on delete cascade on update cascade
+idbezeroa varchar(7) primary key,
+iraungitzedata date not null,
+foreign key (idbezeroa) references bezeroa(idbezeroa) on delete cascade on update cascade
 );
 
 create table gustukoak (
-IdBezeroa varchar(7),
-IdAudio varchar(7),
-primary key (IdBezeroa,IdAudio),
-foreign key (IdBezeroa) references Bezeroa(IdBezeroa) on delete cascade on update cascade,
-foreign key (IdAudio) references Audio(IdAudio) on delete cascade on update cascade
+idbezeroa varchar(7),
+idaudio varchar(7),
+primary key (idbezeroa,idaudio),
+foreign key (idbezeroa) references bezeroa(idbezeroa) on delete cascade on update cascade,
+foreign key (idaudio) references audio(idaudio) on delete cascade on update cascade
 );
 
-create table Erreprodukzioak (
-IdBezeroa varchar(7),
-IdAudio varchar(7),
-data date,
-primary key (IdBezeroa,IdAudio, data),
-foreign key (IdBezeroa) references Bezeroa(IdBezeroa) on delete cascade on update cascade,
-foreign key (IdAudio) references Audio(IdAudio) on delete cascade on update cascade
+create table erreprodukzioak (
+idbezeroa varchar(7),
+idaudio varchar(7),
+data datetime,
+primary key (idbezeroa,idaudio, data),
+foreign key (idbezeroa) references bezeroa(idbezeroa) on delete cascade on update cascade,
+foreign key (idaudio) references audio(idaudio) on delete cascade on update cascade
 );
 
-create table Estatistikak (
-IdAudio varchar(7) primary key,
-GustukoAbestiak int not null,
-GustokoPodcaster int not null,
-Entzundakoa int not null,
+create table estatistikak (
+idaudio varchar(7) primary key,
+gustukoabestiak int not null,
+gustokopodcaster int not null,
+entzundakoa int not null,
 playlist int not null,
-foreign key (IdAudio) references Audio(IdAudio)
+foreign key (idaudio) references audio(idaudio) on delete cascade on update cascade
 );
+
+
+create table bezerodesaktibatuak (
+idbezeroa varchar(7) primary key,
+izena varchar(10) not null,
+abizena varchar(15) not null,
+hizkuntza enum("es", "eu", "en", "fr", "de", "ca", "ga", "ar") not null,
+erabiltzailea varchar(10) not null unique,
+pasahitza varchar(10) not null,
+jaiotzedata date not null,
+erregistrodata date not null,
+iraungitzedata date not null,
+mota enum("premium","free"),
+foreign key (hizkuntza) references hizkuntza(idhizkuntza) on delete cascade on update cascade,
+foreign key (idbezeroa) references bezeroa(idbezeroa) on delete cascade on update cascade
+);
+
+create table admintaula(
+idbezeroa varchar(7) primary key,
+hizkuntza enum("es", "eu", "en", "fr", "de", "ca", "ga", "ar") not null,
+erabiltzailea varchar(10) not null unique,
+pasahitza varchar(10) not null,
+erregistrodata date not null,
+constraint v_idbezero2 foreign key (hizkuntza) references hizkuntza(idhizkuntza) on delete cascade on update cascade
+);
+

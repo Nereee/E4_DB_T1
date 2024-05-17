@@ -1,6 +1,6 @@
-use MIMI;
+use mimi;
 
--- Rolak --
+-- beharrezko rolak sortu --
 drop role if exists DB_Administratzailea;
 drop role if exists Departamentu_burua;
 drop role if exists Analista1;
@@ -8,83 +8,88 @@ drop role if exists Analista2;
 drop role if exists Langileak;
 drop role if exists Bezeroa;
 
-create role DB_Administratzailea;
-create role Departamentu_burua;
-create role Analista1;
-create role Analista2;
-create role Langileak;
-create role Bezeroa;
+create role db_administratzailea;
+create role departamentu_burua;
+create role analista1;
+-- create role analista2;
+create role langileak;
+create role bezeroa;
 
--- ------------------------------ Baimenak esleitu ------------------------------ --
+-- ------------------------------ baimenak esleitu ------------------------------ --
+-- roleei beharrzeko baimenak esleitu, 
+-- admin baimenak (guztia) --
+grant all privileges on mimi.* to db_administratzailea;
 
--- Admin baimenak (Guztia) --
-grant all privileges on MIMI.* to DB_Administratzailea;
+-- dep-buruaren baimenak --
+grant select, insert, update, delete on mimi.* to departamentu_burua;
 
--- Dep-Buruaren baimenak -- ???????
-grant select, insert, update, delete on MIMI.* to Departamentu_burua;
+-- analisten baimenak --
+grant select on mimi.* to analista1;
+-- grant select on mimi.* to analista2;
 
--- Analisten baimenak --
-grant select on MIMI.* to Analista1;
-grant select on MIMI.* to Analista2;
-
--- Langileen baimenak --
+-- langileen baimenak --
 -- ikusi guztia baina aldatu taula batzuk(adminean aldatu daitezke geratzen direnak) --
-grant select on MIMI.* to Langileak;
-GRANT UPDATE ON MIMI.abestia TO Langileak;
-GRANT UPDATE ON MIMI.album TO Langileak;
-GRANT UPDATE ON MIMI.audio TO Langileak;
-GRANT UPDATE ON MIMI.bezeroa TO Langileak;
-GRANT UPDATE ON MIMI.musikaria TO Langileak;
-GRANT UPDATE ON MIMI.playlist TO Langileak;
-GRANT UPDATE ON MIMI.playlist_abestiak TO Langileak;
-GRANT UPDATE ON MIMI.podcast TO Langileak;
-GRANT UPDATE ON MIMI.podcaster TO Langileak;
-GRANT UPDATE ON MIMI.premium TO Langileak;
--- Sentzuzkoa izango lirake insert batzuk egin 
+grant select on mimi.* to langileak;
+grant update on mimi.abestia to langileak;
+grant update on mimi.album to langileak;
+grant update on mimi.audio to langileak;
+grant update on mimi.bezeroa to langileak;
+grant update on mimi.musikaria to langileak;
+grant update on mimi.playlist to langileak;
+grant update on mimi.playlist_abestiak to langileak;
+grant update on mimi.podcast to langileak;
+grant update on mimi.podcaster to langileak;
+grant update on mimi.premium to langileak;
+-- sentzuzkoa izango lirake insert batzuk egin 
 
--- Bezeroen baimenak --
-grant select on MIMI.abestia to Bezeroa;
-grant select on MIMI.album to Bezeroa;
-grant select on MIMI.playlist to Bezeroa;
-grant select on MIMI.playlist_abestiak to Bezeroa;
-grant select on MIMI.podcaster to Bezeroa;
-grant select on MIMI.podcast to Bezeroa;
+-- bezeroen baimenak --
+grant select on mimi.abestia to bezeroa;
+grant select on mimi.album to bezeroa;
+grant select on mimi.playlist to bezeroa;
+grant select on mimi.playlist_abestiak to bezeroa;
+grant select on mimi.podcaster to bezeroa;
+grant select on mimi.podcast to bezeroa;
 
-grant insert on MIMI.playlist to Bezeroa;
+grant insert on mimi.playlist to bezeroa;
 -- ------------------------------------------------------------------------------------ --
--- Erabiltzaileak --
-drop user if exists GizaBaliabidea;
-drop user if exists Salmenta;
-drop user if exists Finantza;
-drop user if exists TecEstrategia;
-drop user if exists Legea;
-drop user if exists IT;
-drop user if exists Zuzendaria;
+-- erabiltzaileak --
+drop user if exists gizabaliabidea;
+drop user if exists salmenta;
+drop user if exists finantza;
+drop user if exists tecestrategia;
+drop user if exists legea;
+drop user if exists it;
+drop user if exists zuzendaria;
 
--- Sorrera --
-create user Zuzendaria identified by "admin";
-create user GizaBaliabidea identified by "1234";
-create user Salmenta identified by "1234";
-create user Finantza identified by "1234";
-create user TecEstrategia identified by "1234";
-create user Legea identified by "1234";
-create user IT identified by "1234";
+-- sorrera --
+create user zuzendaria identified by "admin";
+create user gizabaliabidea identified by "1234";
+create user salmenta identified by "1234";
+create user finantza identified by "1234";
+create user tecestrategia identified by "1234";
+create user legea identified by "1234";
+create user it identified by "1234";
 
--- Rolak esleitu erabiltzaileei --
-grant DB_Administratzailea to Zuzendaria;
-grant Departamentu_burua to GizaBaliabidea;
-grant Analista1 to Salmenta;
-grant Analista2 to Finantza;
-grant Langileak to TecEstrategia;
-grant Bezeroa to Legea;
+-- rolak esleitu erabiltzaileei --
+grant db_administratzailea to zuzendaria;
+grant departamentu_burua to gizabaliabidea;
+grant analista1 to salmenta;
+grant analista1 to finantza;
+-- grant analista2 to finantza;
+grant langileak to tecestrategia;
+grant langileak to legea;
+grant langileak to it;
 
 select * from mysql.user;
-show grants for Zuzendaria;
-show grants for GizaBaliabidea;
-show grants for Salmenta;
-show grants for Finantza;
-show grants for TecEstrategia;
-show grants for Legea;
-show grants for IT;
+show grants for zuzendaria;
+show grants for gizabaliabidea;
+show grants for salmenta;
+show grants for finantza;
+show grants for tecestrategia;
+show grants for legea;
+show grants for it;
 
-select MIMI.abestia
+select mimi.abestia;
+
+select * from mysql.user;
+show grants for bezeroa;
